@@ -22,6 +22,10 @@ Resources:
       Description: ""
       Timeout: 10
       MemorySize: 256
+      Environment:
+        Variables:
+          TABLE_NAME: 
+            "Fn::ImportValue": people-table
       Role:
         "Fn::ImportValue": people-ArnRole
       CodeUri:

@@ -1,0 +1,24 @@
+Resources:
+  DynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+    Properties: 
+      AttributeDefinitions: 
+        - 
+          AttributeName: "Name"
+          AttributeType: "S"
+      KeySchema: 
+        - 
+          AttributeName: "Name"
+          KeyType: "HASH"
+      ProvisionedThroughput: 
+        ReadCapacityUnits: "5"
+        WriteCapacityUnits: "5"
+      TableName: "people-table"
+
+Outputs:
+  DynamoDBTable:
+    Value: !Ref DynamoDBTable
+    Export:
+      Name: people-table
+
