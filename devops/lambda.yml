@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  ApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: people-api
+      StageName: Development
+      OpenApiVersion: 3.0.3
+      Cors:
+        AllowOrigin: "'*'"
+        AllowMethods: "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'"
+        AllowHeaders: "'X-Amz-Date,X-Api-Key,X-Amz-Security-Token,X-Requested-With,X-Auth-Token,Referer,User-Agent,Origin,Content-Type,Authorization,Accept,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Access-Control-Allow-Headers'"
+
+  LambdaPeople:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: people-lambda
+      Handler: index.handler
+      Runtime: nodejs14.x
+      Description: ""
+      Timeout: 10
+      MemorySize: 256
+      Role:
+        "Fn::ImportValue": people-ArnRole
+      CodeUri:
+        Bucket:
+          "Fn::ImportValue": people-lambda-s3-bucket-name
+        Key: lambda.zip
+      Events:
+        GetPeople:
+          Type: Api
+          Properties:
+            Path: /people
+            Method: get
+            RestApiId:
+              Ref: ApiGateway
+        CreatePeople:
+          Type: Api
+          Properties:
+            Path: /people
+            Method: post
+            RestApiId:
+              Ref: ApiGateway
+        UpdatePeople:
+          Type: Api
+          Properties:
+            Path: /people
+            Method: patch
+            RestApiId:
+              Ref: ApiGateway
+        DeletePeople:
+          Type: Api
+          Properties:
+            Path: /people
+            Method: delete
+            RestApiId:
+              Ref: ApiGateway                                          

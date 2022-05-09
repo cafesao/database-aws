@@ -1,0 +1,12 @@
+Resources:
+  S3BucketLambda:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: people-lambda-s3
+
+Outputs:
+  S3BucketLambdaName:
+    Value: !Ref S3BucketLambda
+    Export:
+      Name: people-lambda-s3-bucket-name
+
