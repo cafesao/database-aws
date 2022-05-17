@@ -5,15 +5,30 @@ Resources:
     Properties: 
       AttributeDefinitions: 
         - 
-          AttributeName: "Name"
+          AttributeName: "name"
           AttributeType: "S"
+        - 
+          AttributeName: "cpf"
+          AttributeType: "N"          
       KeySchema: 
         - 
-          AttributeName: "Name"
+          AttributeName: "name"
           KeyType: "HASH"
+      GlobalSecondaryIndexes:
+       - 
+          IndexName: GSI_CPF
+          KeySchema: 
+            - 
+              AttributeName: "cpf"
+              KeyType: "HASH"
+          Projection:
+            ProjectionType: ALL 
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
       ProvisionedThroughput: 
-        ReadCapacityUnits: "2"
-        WriteCapacityUnits: "2"
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
       TableName: "people-table"
 
 Outputs:
