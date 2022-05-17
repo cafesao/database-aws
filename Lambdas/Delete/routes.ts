@@ -6,7 +6,7 @@ interface Routes {
 
 export default (path: string): Function => {
   const routes: Routes = {
-    "/people-DELETE": people.delete
+    "/people": people.delete
   }
   return routes[path]
 }

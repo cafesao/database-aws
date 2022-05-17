@@ -1,63 +1,190 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
+Parameters:
+  TypeProject:
+    Type: String
+    Default: people
+
+  AcmCertificate:
+    Type: String
+
+  DomainName:
+    Type: String
+
+  HostedZone:
+    Type: String
+
+  NameAPI:
+    Type: String
+    Default: people-api
+
+  ServiceNameCreate:
+    Type: String
+    Default: create
+
+  ServiceNameRead:
+    Type: String
+    Default: read
+
+  ServiceNameUpdate:
+    Type: String
+    Default: update
+
+  ServiceNameDelete:
+    Type: String
+    Default: delete
 
 Resources:
   ApiGateway:
     Type: AWS::Serverless::Api
     Properties:
-      Name: people-api
+      Name: !Sub ${TypeProject}-Api
       StageName: Development
       OpenApiVersion: 3.0.3
       Cors:
         AllowOrigin: "'*'"
         AllowMethods: "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'"
         AllowHeaders: "'X-Amz-Date,X-Api-Key,X-Amz-Security-Token,X-Requested-With,X-Auth-Token,Referer,User-Agent,Origin,Content-Type,Authorization,Accept,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Access-Control-Allow-Headers'"
+      Domain:
+        DomainName: !Sub "${NameAPI}.${DomainName}"
+        CertificateArn: !Ref AcmCertificate
+        EndpointConfiguration: EDGE
+        Route53:
+          HostedZoneName: !Ref HostedZone
 
-  LambdaPeople:
+  LambdaCreate:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: people-lambda
+      FunctionName: !Sub ${TypeProject}-${ServiceNameCreate}
       Handler: index.handler
-      Runtime: nodejs14.x
+      Runtime: nodejs16.x
       Description: ""
       Timeout: 10
       MemorySize: 256
-      Environment:
-        Variables:
-          TABLE_NAME: 
-            "Fn::ImportValue": people-table
       Role:
-        "Fn::ImportValue": people-ArnRole
+        "Fn::ImportValue": !Sub ${TypeProject}-ArnRole
       CodeUri:
         Bucket:
-          "Fn::ImportValue": people-lambda-s3-bucket-name
-        Key: lambda.zip
+          "Fn::ImportValue": !Sub ${TypeProject}-lambda-s3-bucket-name
+        Key: Create/lambda.zip
       Events:
-        GetPeople:
-          Type: Api
-          Properties:
-            Path: /people
-            Method: get
-            RestApiId:
-              Ref: ApiGateway
-        CreatePeople:
+        CreateLogo:
           Type: Api
           Properties:
             Path: /people
             Method: post
             RestApiId:
               Ref: ApiGateway
-        UpdatePeople:
+
+  LambdaRead:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${TypeProject}-${ServiceNameRead}
+      Handler: index.handler
+      Runtime: nodejs16.x
+      Description: ""
+      Timeout: 10
+      MemorySize: 256
+      Role:
+        "Fn::ImportValue": !Sub ${TypeProject}-ArnRole
+      CodeUri:
+        Bucket:
+          "Fn::ImportValue": !Sub ${TypeProject}-lambda-s3-bucket-name
+        Key: Read/lambda.zip
+      Events:
+        Read:
+          Type: Api
+          Properties:
+            Path: /people
+            Method: get
+            RestApiId:
+              Ref: ApiGateway
+
+  LambdaUpdate:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${TypeProject}-${ServiceNameUpdate}
+      Handler: index.handler
+      Runtime: nodejs16.x
+      Description: ""
+      Timeout: 10
+      MemorySize: 256
+      Role:
+        "Fn::ImportValue": !Sub ${TypeProject}-ArnRole
+      CodeUri:
+        Bucket:
+          "Fn::ImportValue": !Sub ${TypeProject}-lambda-s3-bucket-name
+        Key: Update/lambda.zip
+      Events:
+        Update:
           Type: Api
           Properties:
             Path: /people
             Method: patch
             RestApiId:
               Ref: ApiGateway
-        DeletePeople:
+
+  LambdaDelete:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${TypeProject}-${ServiceNameDelete}
+      Handler: index.handler
+      Runtime: nodejs16.x
+      Description: ""
+      Timeout: 10
+      MemorySize: 256
+      Role:
+        "Fn::ImportValue": !Sub ${TypeProject}-ArnRole
+      CodeUri:
+        Bucket:
+          "Fn::ImportValue": !Sub ${TypeProject}-lambda-s3-bucket-name
+        Key: Delete/lambda.zip
+      Events:
+        delete:
           Type: Api
           Properties:
             Path: /people
             Method: delete
             RestApiId:
-              Ref: ApiGateway                                          
+              Ref: ApiGateway
+
+Outputs:
+  LambdaNameCreate:
+    Value: !Ref LambdaCreate
+    Export:
+      Name: !Sub ${ServiceNameCreate}-${TypeProject}-LambdaName
+
+  LambdaNameRead:
+    Value: !Ref LambdaRead
+    Export:
+      Name: !Sub ${ServiceNameRead}-${TypeProject}-LambdaName
+
+  LambdaNameUpdate:
+    Value: !Ref LambdaUpdate
+    Export:
+      Name: !Sub ${ServiceNameUpdate}-${TypeProject}-LambdaName
+
+  LambdaNameDelete:
+    Value: !Ref LambdaDelete
+    Export:
+      Name: !Sub ${ServiceNameDelete}-${TypeProject}-LambdaName
+
+  LambdaArnCreate:
+    Value: !GetAtt LambdaCreate.Arn
+    Export:
+      Name: !Sub ${ServiceNameCreate}-${TypeProject}-LambdaArn
+
+  LambdaArnRead:
+    Value: !GetAtt LambdaRead.Arn
+    Export:
+      Name: !Sub ${ServiceNameRead}-${TypeProject}-LambdaArn
+
+  LambdaArnUpdate:
+    Value: !GetAtt LambdaUpdate.Arn
+    Export:
+      Name: !Sub ${ServiceNameUpdate}-${TypeProject}-LambdaArn
+
+  LambdaArnDelete:
+    Value: !GetAtt LambdaDelete.Arn
+    Export:
+      Name: !Sub ${ServiceNameDelete}-${TypeProject}-LambdaArn
