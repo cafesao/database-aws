@@ -64,25 +64,25 @@ aws s3 cp Lambdas/Layer/lib.zip s3://${S3_NAME}/Layer/lib.zip --profile pessoal
 
 #Update Code Lambda
 echo 'Update Code'
-aws lambda update-function-code --function-name people-create --s3-bucket ${S3_NAME} --s3-key Create/lambda.zip --profile pessoal --no-cli-pager --output text || true
-aws lambda update-function-code --function-name people-read --s3-bucket ${S3_NAME} --s3-key Read/lambda.zip --profile pessoal --no-cli-pager --output text || true
-aws lambda update-function-code --function-name people-update --s3-bucket ${S3_NAME} --s3-key Update/lambda.zip --profile pessoal --no-cli-pager --output text || true
-aws lambda update-function-code --function-name people-delete --s3-bucket ${S3_NAME} --s3-key Delete/lambda.zip --profile pessoal --no-cli-pager --output text || true
+aws lambda update-function-code --function-name people-create --s3-bucket ${S3_NAME} --s3-key Create/lambda.zip --profile pessoal --no-cli-pager || true
+aws lambda update-function-code --function-name people-read --s3-bucket ${S3_NAME} --s3-key Read/lambda.zip --profile pessoal --no-cli-pager || true
+aws lambda update-function-code --function-name people-update --s3-bucket ${S3_NAME} --s3-key Update/lambda.zip --profile pessoal --no-cli-pager || true
+aws lambda update-function-code --function-name people-delete --s3-bucket ${S3_NAME} --s3-key Delete/lambda.zip --profile pessoal --no-cli-pager || true
 
 # Update Lib
 echo 'Create Layer'
 export LAYER_CREATE=$(aws lambda publish-layer-version --layer-name people-layer-create --content S3Bucket=${S3_NAME},S3Key=Create/lib.zip --compatible-runtimes nodejs16.x --query 'LayerVersionArn' --profile pessoal --no-cli-pager --output text || true)
 export LAYER_READ=$(aws lambda publish-layer-version --layer-name people-layer-read --content S3Bucket=${S3_NAME},S3Key=Read/lib.zip --compatible-runtimes nodejs16.x --query 'LayerVersionArn' --profile pessoal --no-cli-pager --output text || true)
 export LAYER_UPDATE=$(aws lambda publish-layer-version --layer-name people-layer-update --content S3Bucket=${S3_NAME},S3Key=Update/lib.zip --compatible-runtimes nodejs16.x --query 'LayerVersionArn' --profile pessoal --no-cli-pager --output text || true)
-export LAYER_DELETE=$(aws lambda publish-layer-version --layer-name people-layer-delete --content S3Bucket=${S3_NAME},S3Key=Delete/lib.zip --compatible-runtimes nodejs16.x --query 'LayerVersionArn'--profile pessoal --no-cli-pager --output text || true)
+export LAYER_DELETE=$(aws lambda publish-layer-version --layer-name people-layer-delete --content S3Bucket=${S3_NAME},S3Key=Delete/lib.zip --compatible-runtimes nodejs16.x --query 'LayerVersionArn' --profile pessoal --no-cli-pager --output text || true)
 export LAYER_HELPER=$(aws lambda publish-layer-version --layer-name people-layer-helper --content S3Bucket=${S3_NAME},S3Key=Layer/lib.zip --compatible-runtimes nodejs16.x --query 'LayerVersionArn' --profile pessoal --no-cli-pager --output text || true)
 
 # Update Layers
 echo 'Update Layer'
-aws lambda update-function-configuration --function-name people-create --layers ${LAYER_CREATE} ${LAYER_HELPER} --profile pessoal --no-cli-pager --output text || true
-aws lambda update-function-configuration --function-name people-read --layers ${LAYER_READ} ${LAYER_HELPER} --profile pessoal --no-cli-pager --output text || true
-aws lambda update-function-configuration --function-name people-update --layers ${LAYER_UPDATE} ${LAYER_HELPER} --profile pessoal --no-cli-pager --output text || true
-aws lambda update-function-configuration --function-name people-delete --layers ${LAYER_DELETE} ${LAYER_HELPER} --profile pessoal --no-cli-pager --output text || true
+aws lambda update-function-configuration --function-name people-create --layers ${LAYER_CREATE} ${LAYER_HELPER} --profile pessoal --no-cli-pager || true
+aws lambda update-function-configuration --function-name people-read --layers ${LAYER_READ} ${LAYER_HELPER} --profile pessoal --no-cli-pager || true
+aws lambda update-function-configuration --function-name people-update --layers ${LAYER_UPDATE} ${LAYER_HELPER} --profile pessoal --no-cli-pager || true
+aws lambda update-function-configuration --function-name people-delete --layers ${LAYER_DELETE} ${LAYER_HELPER} --profile pessoal --no-cli-pager || true
 
 # Clear
 echo 'Clear'
@@ -90,4 +90,4 @@ cd Lambdas/Create && rm -r ./dist ./nodejs ./lambda.zip ./lib.zip && echo "Clear
 cd Lambdas/Read && rm -r ./dist ./nodejs ./lambda.zip ./lib.zip && echo "Clear Read" && cd $ROOT_FOLDER
 cd Lambdas/Update && rm -r ./dist ./nodejs ./lambda.zip ./lib.zip && echo "Clear Update" && cd $ROOT_FOLDER
 cd Lambdas/Delete && rm -r ./dist ./nodejs ./lambda.zip ./lib.zip && echo "Clear Delete" && cd $ROOT_FOLDER
-cd Lambdas/Layer && rm -r ./dist ./node_modules ./nodejs ./lib.zip && echo "Clear Delete" && cd $ROOT_FOLDER
+cd Lambdas/Layer && rm -r ./dist ./nodejs ./lib.zip && echo "Clear Delete" && cd $ROOT_FOLDER
