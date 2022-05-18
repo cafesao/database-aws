@@ -9,7 +9,7 @@ Resources:
           AttributeType: "S"
         - 
           AttributeName: "cpf"
-          AttributeType: "N"          
+          AttributeType: "S"          
       KeySchema: 
         - 
           AttributeName: "name"

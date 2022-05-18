@@ -26,6 +26,7 @@ cd Lambdas/Create && rm -r node_modules && yarn --production && cd $ROOT_FOLDER
 cd Lambdas/Read && rm -r node_modules && yarn --production && cd $ROOT_FOLDER
 cd Lambdas/Update && rm -r node_modules && yarn --production && cd $ROOT_FOLDER
 cd Lambdas/Delete && rm -r node_modules && yarn --production && cd $ROOT_FOLDER
+cd Lambdas/Layer && rm -r node_modules && yarn --production && cd $ROOT_FOLDER
 
 # Create folder nodejs and copy node_modules
 cd Lambdas/Create && mkdir nodejs && mv node_modules ./nodejs || true && cd $ROOT_FOLDER

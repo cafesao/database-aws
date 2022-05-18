@@ -7,6 +7,9 @@ import DB from "/opt/nodejs/db/DB"
 const controllerCompany = {
   update: async (event: APIGatewayProxyEvent) => {
     try {
+      if (event.body === null) return Messages.error("Body Empty")
+      const body = JSON.parse(event.body)
+      await DB.update(body)
       console.log("[Lambda] People Update")
       return Messages.success("true")
     } catch (error: any) {
