@@ -10,8 +10,9 @@ const controller = {
       if (event.queryStringParameters === null)
         return Messages.error("Query String Empty")
       const query = event.queryStringParameters
-      const key = Object.keys(query)[0]
-      const value = query[key]
+      const entries = Object.entries(query)[0]
+      const key = entries[0]
+      const value = entries[1]
       await DB.delete(key, value)
       console.log("[Lambda] People Delete")
       return Messages.success("true")

@@ -23,6 +23,19 @@ const DB = {
       return error
     }
   },
+  getAll: async function (key: string, value: string) {
+    try {
+      logParams("DB.getAll")
+      const params = paramsDB.getAll(tableName)
+      const result: any = await dynamoDB.scan(params).promise()
+      return result.Items.map((item: any) =>
+        DynamoDB.Converter.unmarshall(item)
+      )
+    } catch (error) {
+      console.error(error)
+      return error
+    }
+  },
   create: async function (body: any) {
     try {
       logParams("DB.create", body)
@@ -34,23 +47,27 @@ const DB = {
       return error
     }
   },
-  update: async function (body: any) {
+  update: async function (body: any, key: string, value: string) {
     try {
-      logParams("DB.update", body)
-      if (body.hasOwnProperty("name")) {
+      logParams("DB.update", body, key, value)
+      if (key === "name") {
+        body["name"] = value
         const params = paramsDB.putItem(tableName, body)
         const data = await dynamoDB.putItem(params).promise()
         return data
-      } else {
-        const dataCpf: any = await this.get("cpf", body.cpf)
+      } else if (key === "cpf") {
+        const dataCpf: any = await this.get(key, value)
         if (dataCpf) {
           body["name"] = dataCpf.name
+          body["cpf"] === undefined ? (body["cpf"] = value) : null
           const params = paramsDB.putItem(tableName, body)
           const data = await dynamoDB.putItem(params).promise()
           return data
         } else {
           throw new Error("CPF not found")
         }
+      } else {
+        throw new Error("Key not found")
       }
     } catch (error) {
       console.error(error)

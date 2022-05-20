@@ -28,6 +28,11 @@ const params = {
       ScanIndexForward: false
     }
   },
+  getAll: (tableName: string) => {
+    return {
+      TableName: tableName
+    }
+  },
   putItem: (tableName: string, body: any) => {
     return {
       TableName: tableName,
