@@ -26,4 +26,4 @@ aws lambda update-function-configuration --function-name people-update --layers 
 aws lambda update-function-configuration --function-name people-delete --layers ${LAYER_DELETE} ${LAYER_HELPER} --profile pessoal --no-cli-pager || true
 
 echo 'Clear'
-cd Lambdas/Layer && rm -r ./dist ./nodejs ./lib.zip && echo "Clear Delete" && cd $ROOT_FOLDER
+cd Lambdas/Layer && rm -r ./dist ./nodejs ./lib.zip && echo "Clear Layer" && cd $ROOT_FOLDER
