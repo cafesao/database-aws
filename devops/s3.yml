@@ -1,12 +1,17 @@
+Parameters:
+  TypeProject:
+    Type: String
+    Default: people
+    
 Resources:
   S3BucketLambda:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: people-lambda-s3
+      BucketName: !Sub ${TypeProject}-lambda-s3
 
 Outputs:
   S3BucketLambdaName:
     Value: !Ref S3BucketLambda
     Export:
-      Name: people-lambda-s3-bucket-name
+      Name: !Sub ${TypeProject}-lambda-s3-bucket-name
 

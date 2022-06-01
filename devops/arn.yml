@@ -1,3 +1,8 @@
+Parameters:
+  TypeProject:
+    Type: String
+    Default: people
+
 Resources:
   ArnRole:
     Type: AWS::IAM::Role
@@ -20,10 +25,10 @@ Resources:
                 - lambda.amazonaws.com
             Action:
               - 'sts:AssumeRole'
-      RoleName: people-arn-role-lambda
+      RoleName: !Sub ${TypeProject}-arn-role-lambda
 
 Outputs:
   ArnRole:
     Value: !GetAtt ArnRole.Arn
     Export:
-      Name: people-ArnRole
+      Name: !Sub ${TypeProject}-ArnRole
