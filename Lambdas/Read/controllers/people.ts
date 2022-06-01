@@ -12,11 +12,8 @@ const controllerCompany = {
         console.log("[Lambda] People Get")
         return Messages.success(result)
       } else {
-        const query = event.queryStringParameters
-        const entries = Object.entries(query)[0]
-        const key = entries[0]
-        const value = entries[1]
-        const result = await DB.get(key, value)
+        const { name } = event.queryStringParameters
+        const result = await DB.get(name)
         console.log("[Lambda] People Get")
         return Messages.success(result)
       }

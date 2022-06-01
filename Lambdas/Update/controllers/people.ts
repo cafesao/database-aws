@@ -9,12 +9,10 @@ const controllerCompany = {
     try {
       if (event.body === null || event.queryStringParameters === null)
         return Messages.error("Body Empty")
-      const query = event.queryStringParameters
-      const entries = Object.entries(query)[0]
-      const key = entries[0]
-      const value = entries[1]
+
+      const { name } = event.queryStringParameters
       const body = JSON.parse(event.body)
-      await DB.update(body, key, value)
+      await DB.update(name, body)
       console.log("[Lambda] People Update")
       return Messages.success("true")
     } catch (error: any) {
