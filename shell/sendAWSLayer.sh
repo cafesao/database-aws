@@ -18,12 +18,18 @@ export LAYER_UPDATE=$(aws lambda publish-layer-version --layer-name people-layer
 export LAYER_DELETE=$(aws lambda publish-layer-version --layer-name people-layer-delete --content S3Bucket=${S3_NAME},S3Key=Delete/lib.zip --compatible-runtimes nodejs16.x --query 'LayerVersionArn' --profile pessoal --no-cli-pager --output text || true)
 export LAYER_HELPER=$(aws lambda publish-layer-version --layer-name people-layer-helper --content S3Bucket=${S3_NAME},S3Key=Layer/lib.zip --compatible-runtimes nodejs16.x --query 'LayerVersionArn' --profile pessoal --no-cli-pager --output text || true)
 
+# Get Name Lambda
+export LAMBDA_FUNCTION_CREATE_NAME=$(aws --region us-east-1 cloudformation describe-stacks --stack-name people-lambda --query "Stacks[].Outputs[?OutputKey=='LambdaNameCreate'].OutputValue" --profile pessoal --no-cli-pager --output text)
+export LAMBDA_FUNCTION_READ_NAME=$(aws --region us-east-1 cloudformation describe-stacks --stack-name people-lambda --query "Stacks[].Outputs[?OutputKey=='LambdaNameRead'].OutputValue" --profile pessoal --no-cli-pager --output text)
+export LAMBDA_FUNCTION_UPDATE_NAME=$(aws --region us-east-1 cloudformation describe-stacks --stack-name people-lambda --query "Stacks[].Outputs[?OutputKey=='LambdaNameUpdate'].OutputValue" --profile pessoal --no-cli-pager --output text)
+export LAMBDA_FUNCTION_DELETE_NAME=$(aws --region us-east-1 cloudformation describe-stacks --stack-name people-lambda --query "Stacks[].Outputs[?OutputKey=='LambdaNameDelete'].OutputValue" --profile pessoal --no-cli-pager --output text)
+
 # Update Layers
 echo 'Update Layer'
-aws lambda update-function-configuration --function-name people-create --layers ${LAYER_CREATE} ${LAYER_HELPER} --profile pessoal --no-cli-pager || true
-aws lambda update-function-configuration --function-name people-read --layers ${LAYER_READ} ${LAYER_HELPER} --profile pessoal --no-cli-pager || true
-aws lambda update-function-configuration --function-name people-update --layers ${LAYER_UPDATE} ${LAYER_HELPER} --profile pessoal --no-cli-pager || true
-aws lambda update-function-configuration --function-name people-delete --layers ${LAYER_DELETE} ${LAYER_HELPER} --profile pessoal --no-cli-pager || true
+aws lambda update-function-configuration --function-name ${LAMBDA_FUNCTION_CREATE_NAME} --layers ${LAYER_CREATE} ${LAYER_HELPER} --profile pessoal --no-cli-pager || true
+aws lambda update-function-configuration --function-name ${LAMBDA_FUNCTION_READ_NAME} --layers ${LAYER_READ} ${LAYER_HELPER} --profile pessoal --no-cli-pager || true
+aws lambda update-function-configuration --function-name ${LAMBDA_FUNCTION_UPDATE_NAME} --layers ${LAYER_UPDATE} ${LAYER_HELPER} --profile pessoal --no-cli-pager || true
+aws lambda update-function-configuration --function-name ${LAMBDA_FUNCTION_DELETE_NAME} --layers ${LAYER_DELETE} ${LAYER_HELPER} --profile pessoal --no-cli-pager || true
 
 echo 'Clear'
 cd Lambdas/Layer && rm -r ./dist ./nodejs ./lib.zip && echo "Clear Layer" && cd $ROOT_FOLDER
