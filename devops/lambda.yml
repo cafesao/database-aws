@@ -201,3 +201,8 @@ Outputs:
     Value: !GetAtt LambdaDelete.Arn
     Export:
       Name: !Sub ${ServiceNameDelete}-${TypeProject}-LambdaArn
+
+  ApiGatewayURL:
+    Value: !Sub ${NameAPI}.${DomainName}
+    Export:
+      Name: !Sub ${TypeProject}-ApiGatewayURL
