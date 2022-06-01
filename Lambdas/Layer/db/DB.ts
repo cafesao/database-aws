@@ -4,9 +4,9 @@ import { People } from "./schema"
 const DB = {
   get: async function (name: string) {
     try {
-      logParams("db.get")
+      logParams("db.get", name)
       const result = await People.get({ name })
-      console.log(result)
+      return result
     } catch (error) {
       console.log(error)
     }
@@ -15,34 +15,34 @@ const DB = {
     try {
       logParams("db.getAll")
       const result = await People.scan().exec()
-      console.log(result)
+      return result
     } catch (error) {
       console.log(error)
     }
   },
   create: async function (body: any) {
     try {
-      logParams("db.create")
+      logParams("db.create", body)
       const result = await People.create(body)
-      console.log(result)
+      return result
     } catch (error) {
       console.log(error)
     }
   },
   update: async function (name: string, body: any) {
     try {
-      logParams("db.update")
+      logParams("db.update", name, body)
       const result = await People.update({ name }, body)
-      console.log(result)
+      return result
     } catch (error) {
       console.log(error)
     }
   },
   delete: async function (name: string) {
     try {
-      logParams("db.delete")
+      logParams("db.delete", name)
       const result = await People.delete({ name })
-      console.log(result)
+      return result
     } catch (error) {
       console.log(error)
     }
