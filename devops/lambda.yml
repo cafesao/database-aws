@@ -161,6 +161,30 @@ Resources:
             RestApiId:
               Ref: ApiGateway
 
+  LogGroupCreate:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${LambdaCreate}"
+      RetentionInDays: 3  
+
+  LogGroupRead:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${LambdaRead}"
+      RetentionInDays: 3  
+
+  LogGroupUpdate:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${LambdaUpdate}"
+      RetentionInDays: 3  
+
+  LogGroupDelete:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${LambdaDelete}"
+      RetentionInDays: 3                    
+
 Outputs:
   LambdaNameCreate:
     Value: !Ref LambdaCreate
