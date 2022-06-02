@@ -2,7 +2,7 @@ Parameters:
   TypeProject:
     Type: String
     Default: people
-    
+
 Resources:
   S3BucketLambda:
     Type: AWS::S3::Bucket
@@ -14,4 +14,3 @@ Outputs:
     Value: !Ref S3BucketLambda
     Export:
       Name: !Sub ${TypeProject}-lambda-s3-bucket-name
-

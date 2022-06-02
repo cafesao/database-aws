@@ -6,28 +6,26 @@ Parameters:
 Resources:
   DynamoDBTable:
     Type: AWS::DynamoDB::Table
-    Properties: 
-      AttributeDefinitions: 
-        - 
-          AttributeName: "name"
-          AttributeType: "S" 
-      KeySchema: 
-        - 
-          AttributeName: "name"
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "name"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "name"
           KeyType: "HASH"
       # GlobalSecondaryIndexes:
-      #  - 
+      #  -
       #     IndexName: GSI_CPF
-      #     KeySchema: 
-      #       - 
+      #     KeySchema:
+      #       -
       #         AttributeName: "cpf"
       #         KeyType: "HASH"
       #     Projection:
-      #       ProjectionType: ALL 
+      #       ProjectionType: ALL
       #     ProvisionedThroughput:
       #       ReadCapacityUnits: 1
       #       WriteCapacityUnits: 1
-      ProvisionedThroughput: 
+      ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
       TableName: !Sub ${TypeProject}-table
@@ -37,4 +35,3 @@ Outputs:
     Value: !Ref DynamoDBTable
     Export:
       Name: !Sub ${TypeProject}-table
-

@@ -10,21 +10,21 @@ Resources:
       Policies:
         - PolicyName: root
           PolicyDocument:
-            Version: '2012-10-17'
+            Version: "2012-10-17"
             Statement:
               - Effect: Allow
-                Action: '*'
-                Resource: '*'
-      Path: '/'
+                Action: "*"
+                Resource: "*"
+      Path: "/"
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal:
               Service:
                 - lambda.amazonaws.com
             Action:
-              - 'sts:AssumeRole'
+              - "sts:AssumeRole"
       RoleName: !Sub ${TypeProject}-arn-role-lambda
 
 Outputs:
