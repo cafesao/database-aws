@@ -1,0 +1,228 @@
+_type: export
+__export_format: 4
+__export_date: 2022-06-02T00:01:47.053Z
+__export_source: insomnia.desktop.app:v2022.3.0
+resources:
+  - _id: req_7a4658c4823e4ed68529bcc6621e908a
+    parentId: wrk_8135f29792944d7eb4540a26553629b2
+    modified: 1654127419532
+    created: 1652795777308
+    url: "{{ _.url }}"
+    name: Options
+    description: ""
+    method: OPTIONS
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1652795777308
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: wrk_8135f29792944d7eb4540a26553629b2
+    parentId: null
+    modified: 1652795753638
+    created: 1652795753638
+    name: People-API
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_2bfba44d09aa44eb8bdb59a3e4f324d5
+    parentId: fld_1b09d78137f546b7960eb83475c947c3
+    modified: 1654127438114
+    created: 1652795818084
+    url: "{{ _.url }}"
+    name: Create
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "cleber",
+        	"cpf": "88888",
+        	"test1": "arroz1",
+        	"test2": "arroz2",
+        	"test3": "arroz3"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_40f8b4089f6e46718f03162568ab7d5b
+    authentication: {}
+    metaSortKey: -1652795818084
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_1b09d78137f546b7960eb83475c947c3
+    parentId: wrk_8135f29792944d7eb4540a26553629b2
+    modified: 1652795806413
+    created: 1652795762689
+    name: Create
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1652795774548.5
+    _type: request_group
+  - _id: req_900ea51a139a4f848462ba7a76af6dc1
+    parentId: fld_1151a0f74f554df6b06ed524b88a2ea2
+    modified: 1654127443442
+    created: 1653073988984
+    url: "{{ _.url }}"
+    name: Read All
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1653073988984
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_1151a0f74f554df6b06ed524b88a2ea2
+    parentId: wrk_8135f29792944d7eb4540a26553629b2
+    modified: 1652795809178
+    created: 1652795766329
+    name: Read
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1652795773168.75
+    _type: request_group
+  - _id: req_cdc3f2cf93ab456f9c9de66f730b76cc
+    parentId: fld_1151a0f74f554df6b06ed524b88a2ea2
+    modified: 1654127457682
+    created: 1652795825798
+    url: "{{ _.url }}?name=gabriel"
+    name: Read
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1652795825798
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_4ed024b6edaf44bdaebefbd9bc7a0c95
+    parentId: fld_0394396e47aa43268b05566820813159
+    modified: 1654127523348
+    created: 1652795842866
+    url: "{{ _.url }}?name=gabriel"
+    name: Update
+    description: ""
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"cpf": "123456"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_f20ff0c8dca146de9404207808629866
+    authentication: {}
+    metaSortKey: -1652795842866
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_0394396e47aa43268b05566820813159
+    parentId: wrk_8135f29792944d7eb4540a26553629b2
+    modified: 1652795809978
+    created: 1652795769893
+    name: Update
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1652795772478.875
+    _type: request_group
+  - _id: req_202167f43c8945689e9d6e9defe0c334
+    parentId: fld_6fbc855fe7c041f69447b78e2d657ff6
+    modified: 1654127528496
+    created: 1652795877688
+    url: "{{ _.url }}?name=gabriel"
+    name: Delete
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1652795877688
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_6fbc855fe7c041f69447b78e2d657ff6
+    parentId: wrk_8135f29792944d7eb4540a26553629b2
+    modified: 1652795771789
+    created: 1652795771789
+    name: Delete
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1652795771789
+    _type: request_group
+  - _id: env_3a2ba4827daf63f72f7f5bc9adef25786ca975a3
+    parentId: wrk_8135f29792944d7eb4540a26553629b2
+    modified: 1654127411721
+    created: 1652795753648
+    name: Base Environment
+    data:
+      url: https://people.cafesao.net/people
+    dataPropertyOrder:
+      "&":
+        - url
+    color: null
+    isPrivate: false
+    metaSortKey: 1652795753648
+    _type: environment
+  - _id: jar_3a2ba4827daf63f72f7f5bc9adef25786ca975a3
+    parentId: wrk_8135f29792944d7eb4540a26553629b2
+    modified: 1652795753649
+    created: 1652795753649
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_43b358d2d6d847fc98ab294945757758
+    parentId: wrk_8135f29792944d7eb4540a26553629b2
+    modified: 1652795753642
+    created: 1652795753642
+    fileName: People-API
+    contents: ""
+    contentType: yaml
+    _type: api_spec
