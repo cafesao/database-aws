@@ -16,10 +16,10 @@ cd Lambdas/Delete && yarn compile && cd $ROOT_FOLDER
 cd Lambdas/Layer && yarn compile && cd $ROOT_FOLDER
 
 # Zip Lambdas
-cd Lambdas/Create && cd ./dist && zip -q -r ../lambda.zip ./ && echo "Success Create" && cd $ROOT_FOLDER
-cd Lambdas/Read && cd ./dist && zip -q -r ../lambda.zip ./ && echo "Success Read" && cd $ROOT_FOLDER
-cd Lambdas/Update && cd ./dist && zip -q -r ../lambda.zip ./ && echo "Success Update" && cd $ROOT_FOLDER
-cd Lambdas/Delete && cd ./dist && zip -q -r ../lambda.zip ./ && echo "Success Delete" && cd $ROOT_FOLDER
+cd Lambdas/Create && cd ./dist/Create && zip -q -r ../../lambda.zip ./ && echo "Success Create" && cd $ROOT_FOLDER
+cd Lambdas/Read && cd ./dist/Read && zip -q -r ../../lambda.zip ./ && echo "Success Read" && cd $ROOT_FOLDER
+cd Lambdas/Update && cd ./dist/Update && zip -q -r ../../lambda.zip ./ && echo "Success Update" && cd $ROOT_FOLDER
+cd Lambdas/Delete && cd ./dist/Delete && zip -q -r ../../lambda.zip ./ && echo "Success Delete" && cd $ROOT_FOLDER
 
 # Remove node_modules and install dependencies (prod)
 cd Lambdas/Create && rm -r node_modules && yarn --production && cd $ROOT_FOLDER
