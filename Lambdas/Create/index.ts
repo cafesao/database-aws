@@ -1,8 +1,7 @@
 import { APIGatewayProxyHandler, APIGatewayProxyResult } from "aws-lambda"
 import routes from "./routes"
-//@ts-ignore
+
 import logLambda from "/opt/nodejs/helpers/logLambda"
-// @ts-ignore
 import verifyKey from "/opt/nodejs/helpers/verifyKey"
 
 export const handler: APIGatewayProxyHandler = async (
@@ -12,6 +11,7 @@ export const handler: APIGatewayProxyHandler = async (
 ): Promise<any> => {
   logLambda(context)
   const { key } = event.headers
+  if (key === undefined) throw new Error("Error")
   if (!verifyKey(key)) {
     return {
       statusCode: 401,

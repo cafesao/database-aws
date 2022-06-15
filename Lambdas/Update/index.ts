@@ -1,8 +1,7 @@
 import { APIGatewayProxyHandler, APIGatewayProxyResult } from "aws-lambda"
 import routes from "./routes"
-// @ts-ignore
+
 import logLambda from "/opt/nodejs/helpers/logLambda"
-// @ts-ignore
 import verifyKey from "/opt/nodejs/helpers/verifyKey"
 
 export const handler: APIGatewayProxyHandler = async (
