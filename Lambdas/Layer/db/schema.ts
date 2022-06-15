@@ -1,6 +1,6 @@
 import { Schema, model } from "dynamoose"
 
-const TABLE_NAME = process.env.TABLE_NAME
+const TABLE_NAME = process.env.TABLE_NAME || "dev"
 
 const peopleSchema = new Schema({
   name: {
